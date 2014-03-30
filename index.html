@@ -42,9 +42,33 @@
 		</section>
 
 		<section class="landmarks">
-			<aside class="landmarks_types">
-			</aside>
-			<div id="landmarks_map" class="landmarks_map"></div>
+			<h2>Landmarks around</h2>
+			<ul class="landmarks_types">
+				<li class="lanmarks_types_item">
+					<a href="#" class="landmark_link clear-filter active">All landmarks</a>
+				</li>
+				<li class="lanmarks_types_item">
+					<a href="#" class="landmark_link" data-type="statue">
+						<i class="marker marker_statue"></i>Statues
+					</a>
+				</li>
+				<li class="lanmarks_types_item">
+					<a href="#" class="landmark_link" data-type="cathedral">
+						<i class="marker marker_cathedral"></i>Cathedrals
+					</a>
+				</li>
+				<li class="lanmarks_types_item">
+					<a href="#" class="landmark_link" data-type="palace">
+						<i class="marker marker_palace"></i>Palaces
+					</a>
+				</li>
+				<li class="lanmarks_types_item">
+					<a href="#" class="landmark_link" data-type="fountain">
+						<i class="marker marker_fountain"></i>Fountains
+					</a>
+				</li>
+			</ul>
+			<div id="landmarks_map" class="landmarks_map" data-location="[0, 0]"></div>
 		</section>
 		
 		<section class="facilities">
@@ -466,6 +490,7 @@
 			&copy;2014 Booking.com
 		</section>
 		
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 		<script src="jquery-2.1.0.min.js"></script>
 		<script src="js.js"></script>
 	</body>

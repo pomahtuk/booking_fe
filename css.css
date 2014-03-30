@@ -208,3 +208,72 @@ h2 {
 	content: '✔ ';
 	color: #0896ff;
 }
+
+.landmarks {
+	height: 345px;
+	margin: 0 0 20px 0;
+}
+
+.landmarks .landmarks_types {
+	float: left;
+	width: 220px;
+	box-sizing: border-box;
+	list-style: none;
+	height: 300px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.landmarks .lanmarks_types_item {
+	font-size: 14px;
+	margin: 5px 0px
+}
+
+.landmarks .landmark_link {
+	line-height: 37px;
+	display: block;
+	height: 37px;
+	margin: 0px 10px 0 0px;
+	padding: 0px 10px;
+	text-decoration: none;
+	color: inherit;
+}
+
+.landmarks .landmark_link:hover,
+.landmarks .landmark_link.active {
+	background: #f5f5f5;
+}
+
+.landmarks .landmark_link.active {
+	font-style: italic;
+}
+
+.landmarks .marker {
+	display: inline-block;
+	height: 37px;
+	width: 32px;
+	margin-right: 10px;
+	vertical-align: middle;
+}
+
+.landmarks .marker.marker_statue {
+	background: url('/img/marker_statue.png')
+}
+
+.landmarks .marker.marker_cathedral {
+	background: url('/img/marker_cathedral.png')
+}
+
+.landmarks .marker.marker_palace {
+	background: url('/img/marker_palace.png')
+}
+
+.landmarks .marker.marker_fountain {
+	background: url('/img/marker_fountain.png')
+}
+
+.landmarks .landmarks_map {
+	float: left;
+	height: 300px;
+	width: 740px;
+}
