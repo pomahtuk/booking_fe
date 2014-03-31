@@ -68,6 +68,10 @@ h2 {
 	width: 80px;
 }
 
+.photos .one_photo a.active img{
+	box-shadow: rgba(0,0,0, 0.75) 0px 1px 4px 2px;
+}
+
 .photos .viewport {
 	margin: 0 auto 10px auto;
 	height: 460px;

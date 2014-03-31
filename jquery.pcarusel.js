@@ -59,11 +59,12 @@
           })(this), 100);
           carusel.container.append(img);
           if (index === 0) {
-            return carusel.title.text(title);
+            carusel.title.text(title);
+            return slide.addClass('active');
           }
         });
         setTimeout(function() {
-          carusel.container.width(caruselWidth);
+          carusel.container.width(caruselWidth + (caruselWidth / carusel.slides.length));
           return carusel.animProgress = false;
         }, 100);
         carusel.setInterval();
@@ -143,6 +144,9 @@
             left: "-=" + this.slideWidth
           }, this.settings.animSpeed, animCallback);
         } else {
+          if (newIndex === this.slides.length - 1) {
+            debugger;
+          }
           tempTargetSlide.insertBefore(currentSlide);
           this.container.css({
             left: "-" + (this.slideWidth * (this.slideIndex + 1)) + "px"

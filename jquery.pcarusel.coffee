@@ -71,9 +71,11 @@
         carusel.container.append img
         if index is 0
           carusel.title.text title
+          slide.addClass 'active'
 
       setTimeout ->
-        carusel.container.width(caruselWidth)
+        # add one extra slide for animation
+        carusel.container.width(caruselWidth + (caruselWidth / carusel.slides.length))
         carusel.animProgress = false
       , 100
 
@@ -147,6 +149,7 @@
         tempTargetSlide.insertAfter currentSlide
         @container.animate { left: "-=#{ @slideWidth }" }, @settings.animSpeed, animCallback
       else
+        debugger if newIndex is @slides.length - 1
         tempTargetSlide.insertBefore currentSlide
         @container.css { left: "-#{ @slideWidth * (@slideIndex + 1) }px" }
         @container.animate { left: "+=#{ @slideWidth }" }, @settings.animSpeed, animCallback
