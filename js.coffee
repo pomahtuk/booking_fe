@@ -19,6 +19,9 @@ Function::debounce = (threshold, execAsap) ->
     return
 
 $ ->
+
+  $('.photos').pcarusel()
+
   #initing variables in global clojure scope
   landmarkTypes = $('.landmarks .landmark_link')
   clearFilter   = $('.landmarks .landmark_link.clear-filter')

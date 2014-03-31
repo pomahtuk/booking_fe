@@ -27,6 +27,7 @@
 
   $(function() {
     var clearFilter, filterLandmarksByType, getLandmarks, landmarkTypes, landmarks, location, map, mapOptions, markerImages, newLandmarks, setMarkers, types;
+    $('.photos').pcarusel();
     landmarkTypes = $('.landmarks .landmark_link');
     clearFilter = $('.landmarks .landmark_link.clear-filter');
     map = void 0;

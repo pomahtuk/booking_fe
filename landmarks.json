@@ -4,8 +4,7 @@
   "title": "Peter the Great",
   "lat": 1,
   "lng": 2,
-  "type": "statue",
-  "short": "Statue for Peter the Great - the conqueror of Vyborg"
+  "type": "statue"
  },
 
  {
@@ -13,8 +12,7 @@
   "title": "Torgels Knutson",
   "lat": 2,
   "lng": 3,
-  "type": "statue",
-  "short": "Statue for Torgels Knutson - founder of Vyborg"
+  "type": "statue"
  },
 
  {
@@ -22,8 +20,7 @@
   "title": "St. Peters and St.Pauls cathedral",
   "lat": 3,
   "lng": 4,
-  "type": "cathedral",
-  "short": "Lutheran cathedral near city center"
+  "type": "cathedral"
  },
 
  {
@@ -31,8 +28,7 @@
   "title": "Ильинская церковь",
   "lat": 4,
   "lng": 5,
-  "type": "cathedral",
-  "short": "Orthodoxal church on top of the hill"
+  "type": "cathedral"
  },
 
  {
@@ -40,8 +36,7 @@
   "title": "Baron de Nicolai's palace",
   "lat": 5,
   "lng": 6,
-  "type": "palace",
-  "short": "Former residence of founder of Monrepos park"
+  "type": "palace"
  },
 
  {
@@ -49,8 +44,7 @@
   "title": "Govenment palace",
   "lat": 6,
   "lng": 7,
-  "type": "palace",
-  "short": "Current govenment residence"
+  "type": "palace"
  },
 
  {
@@ -58,8 +52,7 @@
   "title": "Gulf of finland fountain",
   "lat": 7,
   "lng": 8,
-  "type": "fountain",
-  "short": "Floating fountain between railwaystation anf old castle"
+  "type": "fountain"
  },
 
  {
@@ -67,7 +60,6 @@
   "title": "Central fountain",
   "lat": 8,
   "lng": 9,
-  "type": "fountain",
-  "short": "Fountain located near Alvaar Aalto library"
+  "type": "fountain"
  }
 ]

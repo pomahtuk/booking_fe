@@ -68,6 +68,89 @@ h2 {
 	width: 80px;
 }
 
+.photos .viewport {
+	margin: 0 auto 10px auto;
+	height: 460px;
+	width: 840px;
+	overflow: hidden;
+	position: relative;
+}
+
+.photos .viewport .slide-title {
+	display: inline-block;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	background: rgba(0,0,0, 0.75);
+	color: #fff;
+	padding: 5px 10px;
+}
+
+.photos .viewport .carusel-prev,
+.photos .viewport .carusel-next {
+	background: url('/img/carousel-arrows.png');
+	position: absolute;
+	top: 50%;
+	margin-top: -16px;
+	height: 33px;
+	width: 33px;
+	z-index: 999;
+}
+
+.photos .viewport .carusel-prev {
+	left: 10px;
+}
+
+.photos .viewport .carusel-prev:hover {
+	background-position: 0px -34px;
+}
+
+.photos .viewport .carusel-next {
+	right: 10px;
+	background-position: -34px 0px;
+}
+
+.photos .viewport .carusel-next:hover {
+	background-position: -34px -34px;
+}
+
+.photos .viewport .play-pause {
+	background: url('/img/button-play-pause.png');
+	display: block;
+	position: absolute;
+	z-index: 999;
+	top: 5px;
+	right: 5px;
+	width: 33px;
+	height: 33px;
+}
+
+.photos .viewport .play-pause.pause {
+	background-position: -33px 0px;
+}
+
+.photos .viewport .play-pause.pause:hover {
+	background-position: -33px -33px;
+}
+
+.photos .viewport .play-pause.play {
+	background-position: 0px 0px;
+}
+
+.photos .viewport .play-pause.play:hover {
+	background-position: 0px -33px;
+}
+
+.photos .wrapper {
+	position: relative;
+}
+
+.photos .wrapper img {
+	display: block;
+	float: left;
+}
+
 /* reviews */
 
 .reviews_list {
