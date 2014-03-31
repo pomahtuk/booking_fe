@@ -26,15 +26,16 @@
   };
 
   $(function() {
-    var clearFilter, clearLandmarks, drawLandmarks, filterLandmarksByType, getLandmarks, landmarkTypes, landmarks, location, map, mapOptions, markerImages, setMarkers, types;
+    var clearFilter, filterLandmarksByType, getLandmarks, landmarkTypes, landmarks, location, map, mapOptions, markerImages, newLandmarks, setMarkers, types;
     landmarkTypes = $('.landmarks .landmark_link');
     clearFilter = $('.landmarks .landmark_link.clear-filter');
     map = void 0;
     landmarks = [];
+    newLandmarks = [];
     types = [];
     location = $('#landmarks_map').data('location');
     mapOptions = {
-      zoom: 8,
+      zoom: 5,
       center: new google.maps.LatLng(location[0], location[1])
     };
     map = new google.maps.Map(document.getElementById('landmarks_map'), mapOptions);
@@ -45,9 +46,9 @@
       'fountain': '/img/marker_fountain.png'
     };
     setMarkers = function() {
-      var image, landmark, marker, myLatLng, _i, _len;
-      for (_i = 0, _len = landmarks.length; _i < _len; _i++) {
-        landmark = landmarks[_i];
+      var image, landmark, marker, myLatLng, truncLandmark, _i, _j, _len, _len1;
+      for (_i = 0, _len = newLandmarks.length; _i < _len; _i++) {
+        landmark = newLandmarks[_i];
         image = {
           url: markerImages[landmark.type],
           size: new google.maps.Size(32, 37),
@@ -59,18 +60,18 @@
           map: null,
           icon: image,
           flat: true,
+          optimized: true,
           title: landmark.title
         });
         landmark.marker = marker;
       }
-      return true;
-    };
-    drawLandmarks = function(filerredLandmarks) {
-      var landmark, _i, _len;
-      for (_i = 0, _len = filerredLandmarks.length; _i < _len; _i++) {
-        landmark = filerredLandmarks[_i];
-        landmark.marker.setMap(map);
+      filterLandmarksByType(newLandmarks);
+      for (_j = 0, _len1 = landmarks.length; _j < _len1; _j++) {
+        truncLandmark = landmarks[_j];
+        truncLandmark.marker.setMap(null);
       }
+      landmarks = newLandmarks;
+      newLandmarks = [];
       return true;
     };
     getLandmarks = function() {
@@ -84,38 +85,32 @@
         },
         contentType: 'json'
       });
-      clearLandmarks(true);
       request.then(function(data) {
-        landmarks = JSON.parse(data);
-        setMarkers();
-        return drawLandmarks(filterLandmarksByType());
+        newLandmarks = JSON.parse(data);
+        return setMarkers();
       }, function(error) {
         return console.warn('data error');
       });
       return true;
     };
-    clearLandmarks = function(clear) {
+    filterLandmarksByType = function(items) {
       var landmark, _i, _len;
-      if (clear == null) {
-        clear = false;
+      if (items == null) {
+        items = landmarks;
       }
-      for (_i = 0, _len = landmarks.length; _i < _len; _i++) {
-        landmark = landmarks[_i];
-        landmark.marker.setMap(null);
-        if (clear) {
-          delete landmark.marker;
+      for (_i = 0, _len = items.length; _i < _len; _i++) {
+        landmark = items[_i];
+        if (types.length > 0) {
+          if (types.indexOf(landmark.type) !== -1) {
+            landmark.marker.setMap(map);
+          } else {
+            landmark.marker.setMap(null);
+          }
+        } else {
+          landmark.marker.setMap(map);
         }
       }
       return true;
-    };
-    filterLandmarksByType = function() {
-      if (types.length > 0) {
-        return $.grep(landmarks, function(landmark, index) {
-          return types.indexOf(landmark.type) !== -1;
-        });
-      } else {
-        return landmarks;
-      }
     };
     landmarkTypes.click(function(e) {
       var element, elementType;
@@ -139,8 +134,7 @@
           element.addClass('active');
         }
       }
-      clearLandmarks();
-      drawLandmarks(filterLandmarksByType());
+      filterLandmarksByType();
       return false;
     });
     google.maps.event.addListener(map, 'bounds_changed', (function() {

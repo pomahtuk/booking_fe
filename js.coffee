@@ -22,14 +22,15 @@ $ ->
   #initing variables in global clojure scope
   landmarkTypes = $('.landmarks .landmark_link')
   clearFilter   = $('.landmarks .landmark_link.clear-filter')
-  map       = undefined
-  landmarks = []
-  types     = []
-  location = $('#landmarks_map').data('location')
+  map           = undefined
+  landmarks     = []
+  newLandmarks  = []
+  types         = []
+  location      = $('#landmarks_map').data('location')
 
   # use server-side templates for initial point
   mapOptions = {
-    zoom: 8
+    zoom: 5
     center: new google.maps.LatLng(location[0], location[1])
   }
 
@@ -47,7 +48,7 @@ $ ->
   # set marker properties for each response item
   # extend each object with marker reference for filtering
   setMarkers = ->
-    for landmark in landmarks
+    for landmark in newLandmarks
       image = {
         url: markerImages[landmark.type]
         size: new google.maps.Size(32, 37)
@@ -61,17 +62,19 @@ $ ->
         map: null
         icon: image
         flat: true
+        optimized: true
         title: landmark.title
       }
 
       landmark.marker = marker
 
-    true
+    filterLandmarksByType(newLandmarks)
 
-  # set map if marker to current
-  drawLandmarks = (filerredLandmarks) ->
-    for landmark in filerredLandmarks
-      landmark.marker.setMap map
+    for truncLandmark in landmarks
+      truncLandmark.marker.setMap null
+    landmarks = newLandmarks
+    newLandmarks = []
+
     true
 
   # fetch data from server
@@ -87,31 +90,30 @@ $ ->
       contentType: 'json'
     }
 
-    clearLandmarks true
-
+    # now process request
     request.then (data) ->
-      landmarks = JSON.parse(data)
+      newLandmarks = JSON.parse(data)
       setMarkers()
-      drawLandmarks(filterLandmarksByType())
     , (error) ->
       console.warn 'data error'
-
-    true
-
-  # hide and delete markers (optional)
-  clearLandmarks = (clear = false) ->
-    for landmark in landmarks
-      landmark.marker.setMap( null )
-      delete landmark.marker if clear
     true
 
   # for type filtering
-  filterLandmarksByType = ->
-    if types.length > 0
-      $.grep landmarks, (landmark, index) ->
-        types.indexOf(landmark.type) isnt -1
-    else
-      landmarks
+  filterLandmarksByType = (items = landmarks) ->
+    for landmark in items
+      if types.length > 0
+        if types.indexOf(landmark.type) isnt -1
+          landmark.marker.setMap map
+        else
+          landmark.marker.setMap null
+      else
+        landmark.marker.setMap map
+
+    true
+    #   $.grep landmarks, (landmark, index) ->
+    #     types.indexOf(landmark.type) isnt -1
+    # else
+    #   landmarks
 
   landmarkTypes.click (e) ->
     e.preventDefault()
@@ -131,8 +133,7 @@ $ ->
         types.push elementType
         element.addClass 'active'
 
-    clearLandmarks()
-    drawLandmarks(filterLandmarksByType())
+    filterLandmarksByType()
 
     false
 
