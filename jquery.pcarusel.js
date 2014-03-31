@@ -29,7 +29,7 @@
       Carusel.prototype.init = function() {
         var carusel, caruselWidth, template;
         carusel = this;
-        template = $("<div class=\"viewport\">\n  <a class=\"" + carusel.settings.prevClass + "\" href=\"#\"></a>\n  <a class=\"play-pause pause\" href=\"#\"></a>\n  <div class=\"wrapper\">\n  </div>\n  <div class=\"slide-title\"></div>\n  <a class=\"" + carusel.settings.nextClass + "\" href=\"#\"></a>\n</div>");
+        template = $("<div class=\"viewport\">\n  <a class=\"" + carusel.settings.prevClass + "\" href=\"#\"></a>\n  <a class=\"play-pause pause\" href=\"#\"></a>\n  <div class=\"wrapper\"></div>\n  <div class=\"slide-title\"></div>\n  <a class=\"" + carusel.settings.nextClass + "\" href=\"#\"></a>\n</div>");
         carusel.element.prepend(template);
         carusel.container = template.find('.wrapper');
         carusel.title = template.find('.slide-title');
@@ -46,27 +46,24 @@
         });
         caruselWidth = 0;
         carusel.slidesThumbs.each(function(index, slide) {
-          var img, link, title;
+          var img, link, timeoutImg, title;
           slide = $(slide);
           slide.attr('data-index', index);
           link = slide.attr('href');
           title = slide.find('img').attr('alt');
-          img = $("<img class='carusel-slide' src='" + link + "' title='" + title + "' data-index='" + index + "'/>");
-          setTimeout((function(_this) {
-            return function() {
-              return caruselWidth += img.width();
-            };
-          })(this), 100);
+          img = $("<img class='carusel-slide' src='" + link + "' alt='" + title + "' data-index='" + index + "'/>");
           carusel.container.append(img);
           if (index === 0) {
             carusel.title.text(title);
-            return slide.addClass('active');
+            slide.addClass('active');
+            timeoutImg = new Image;
+            timeoutImg.src = link;
+            return timeoutImg.onload = function() {
+              carusel.container.width(timeoutImg.width * (carusel.slidesThumbs.length + 1));
+              return carusel.animProgress = false;
+            };
           }
         });
-        setTimeout(function() {
-          carusel.container.width(caruselWidth + (caruselWidth / carusel.slides.length));
-          return carusel.animProgress = false;
-        }, 100);
         carusel.setInterval();
         carusel.playPause.click(function(e) {
           var button;
@@ -134,7 +131,7 @@
               left: "-" + (_this.slideWidth * newIndex) + "px"
             });
             _this.slideIndex = newIndex;
-            _this.title.text($(_this.slides[_this.slideIndex]).attr('title'));
+            _this.title.text($(_this.slides[_this.slideIndex]).attr('alt'));
             return _this.animProgress = false;
           };
         })(this);
@@ -144,9 +141,6 @@
             left: "-=" + this.slideWidth
           }, this.settings.animSpeed, animCallback);
         } else {
-          if (newIndex === this.slides.length - 1) {
-            debugger;
-          }
           tempTargetSlide.insertBefore(currentSlide);
           this.container.css({
             left: "-" + (this.slideWidth * (this.slideIndex + 1)) + "px"

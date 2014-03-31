@@ -34,8 +34,7 @@
         <div class="viewport">
           <a class="#{carusel.settings.prevClass}" href="#"></a>
           <a class="play-pause pause" href="#"></a>
-          <div class="wrapper">
-          </div>
+          <div class="wrapper"></div>
           <div class="slide-title"></div>
           <a class="#{carusel.settings.nextClass}" href="#"></a>
         </div>
@@ -64,20 +63,19 @@
         slide.attr('data-index', index)
         link  = slide.attr('href')
         title = slide.find('img').attr('alt')
-        img   = $ "<img class='carusel-slide' src='#{link}' title='#{title}' data-index='#{index}'/>"
-        setTimeout =>
-          caruselWidth += img.width()
-        , 100
+        img   = $ "<img class='carusel-slide' src='#{link}' alt='#{title}' data-index='#{index}'/>"
         carusel.container.append img
+
         if index is 0
           carusel.title.text title
           slide.addClass 'active'
-
-      setTimeout ->
-        # add one extra slide for animation
-        carusel.container.width(caruselWidth + (caruselWidth / carusel.slides.length))
-        carusel.animProgress = false
-      , 100
+          # using ti,eout image to determine with of item
+          # assuming all images to be equal size
+          timeoutImg = new Image
+          timeoutImg.src = link
+          timeoutImg.onload = ->
+            carusel.container.width( timeoutImg.width * (carusel.slidesThumbs.length + 1) )
+            carusel.animProgress = false
 
       carusel.setInterval()
 
@@ -141,7 +139,7 @@
         tempTargetSlide.remove()
         @container.css { left: "-#{ @slideWidth * newIndex }px" }
         @slideIndex = newIndex
-        @title.text $(@slides[@slideIndex]).attr('title')
+        @title.text $(@slides[@slideIndex]).attr('alt')
         @animProgress = false
 
       #animation goes here
@@ -149,7 +147,6 @@
         tempTargetSlide.insertAfter currentSlide
         @container.animate { left: "-=#{ @slideWidth }" }, @settings.animSpeed, animCallback
       else
-        debugger if newIndex is @slides.length - 1
         tempTargetSlide.insertBefore currentSlide
         @container.css { left: "-#{ @slideWidth * (@slideIndex + 1) }px" }
         @container.animate { left: "+=#{ @slideWidth }" }, @settings.animSpeed, animCallback

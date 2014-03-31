@@ -148,6 +148,7 @@ h2 {
 
 .photos .wrapper {
 	position: relative;
+	overflow: auto;
 }
 
 .photos .wrapper img {
